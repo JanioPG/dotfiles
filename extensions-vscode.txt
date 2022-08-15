@@ -1,0 +1,9 @@
+Python
+autoDocstring
+Dracula Official
+Live Server
+Path Intellisense
+Material Icon Theme
+Code Runner
+Django
+Dokcer - microsoft
