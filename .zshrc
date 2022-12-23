@@ -4,6 +4,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+# add adb ao path
+export PATH=$PATH:$HOME"/platform-tools"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -99,6 +102,11 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#alias tracking_android="python ~/Tracking/mobile/debug_log/android_debug_log.py"
+#alias tracking_ios="python ~/Tracking/mobile/debug_log/ios_debug_log.py"
+# o comando abaixo irá executar somente o primeiro arquivo encontrado
+alias tracking_android="python `find $HOME -iname 'android*log.py' -print`"
+alias tracking_ios="python `find $HOME -iname 'ios*log.py' -print`"
 
 . $HOME/.asdf/asdf.sh
 
@@ -106,3 +114,8 @@ source $ZSH/oh-my-zsh.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 # initialise completions with ZSH's compinit
 autoload -Uz compinit && compinit
+
+# Fixing the issue - ubuntu + tilix
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte.sh
+fi
