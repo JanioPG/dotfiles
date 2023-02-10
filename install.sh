@@ -48,8 +48,10 @@ function baixar_repo {
         echo "Git não está instalado."
         echo " Instale com apt para Linux (debian/ubuntu): 'sudo apt install git'."
         echo " Ou com o homebrew para Mac: 'brew install git'."
-        echo " NOTA: Após instalar, adicione seu nome com 'git config --global user.name 'seunome'."
-        echo "       Adicione seu e-mail com 'git config --global user.email 'example@domain.com'."
+        echo " NOTA: Após instalar, adicione seu nome com:"
+        echo -e "\tgit config --global user.name 'seunome'."
+        echo -e "Adicione seu e-mail com:"
+        echo -e "\tgit config --global user.email 'example@domain.com'."
     fi
 }
 
@@ -71,7 +73,7 @@ function add_alias {
     else
         echo "alias tracking_ios='python3 $IOS_SCRIPT'" >> ~/.zshrc
     fi
-    echo "  Concluído para zsh."
+    echo -e "\tConcluído para zsh."
 
 
     # bash
@@ -86,7 +88,7 @@ function add_alias {
     else
         echo "alias tracking_ios='python3 $IOS_SCRIPT'" >> ~/.bashrc
     fi
-    echo "  Concluído para bash."
+    echo -e "\tConcluído para bash."
 
     install_adb
 }
@@ -97,15 +99,15 @@ function add_adb_to_path {
 
     if ! grep 'export\ PATH.*platform-tools' ~/.zshrc; then
         echo "Adicionando adb na variável path" >> ~/.zshrc
-        echo "export PATH=$PATH:$HOME/.appDebugLogs/platform-tools" >> ~/.zshrc
+        echo -e "export PATH=\$PATH:\$HOME/.appDebugLogs/platform-tools" >> ~/.zshrc
     fi
-    echo "  Concluído para zsh."
+    echo -e "\tConcluído para zsh."
 
     if ! grep 'export\ PATH.*platform-tools' ~/.bashrc; then
         echo "Adicionando adb na variável path" >> ~/.bashrc
-        echo "export PATH=$PATH:$HOME/.appDebugLogs/platform-tools" >> ~/.bashrc
+        echo -e "export PATH=\$PATH:\$HOME/.appDebugLogs/platform-tools" >> ~/.bashrc
     fi
-    echo " Concluído para bash."
+    echo -e "\tConcluído para bash."
 }
 
 
@@ -140,15 +142,15 @@ function install_adb {
 
         if [[ $OS_INFO == "Darwin" ]]; then
             if find ~/Library/Android/sdk/platform-tools -iname adb -print; then
-                echo "Apesar disso, encontrei o adb em ~/Library/Android/sdk/platform-tools. Adicione-o à variável path para usar."
-                echo "  Em seu arquivo .zshrc (ou .bashrc) na home, adicione a linha:"
-                echo "    export PATH=<Variavel_PATH>:<Variavel_HOME>/Library/Android/sdk/platform-tools"
+                echo "Apesar disso, encontrei o adb em ~/Library/Android/sdk/platform-tools/adb. Adicione-o à variável path para usar."
+                echo "Em seu arquivo .zshrc (ou .bashrc) na home, adicione a linha:"
+                echo -e "\texport PATH=\$PATH:\$HOME/Library/Android/sdk/platform-tools"
             fi
         elif [[ $OS_INFO == "Linux" ]]; then
             if ls `find ~/Android -type d -iname platform-tools -print` | grep adb; then
-                echo "Apesar disso, encontrei o adb em ~/Android/platform-tools. Adicione-o à variável path para usar."
+                echo "Apesar disso, encontrei o adb em ~/Android/Sdk/platform-tools/adb. Adicione-o à variável path para usar."
                 echo "  Em seu arquivo .zshrc (ou .bashrc) na home, adicione a linha."
-                echo "    export PATH=<Variavel_PATH:<Variavel_HOME>/Android/platform-tools"
+                echo -e "\texport PATH=\$PATH:\$HOME/Android/platform-tools"
             fi
         fi
 
