@@ -33,6 +33,7 @@ function criar_debugLogs {
 
 function baixar_repo {
     if git --version; then
+        echo "Baixando repositório:"
         git clone https://github.com/JanioPG/Debug-Logs-Tracking.git $DEBUG_LOGS
 
         if [[ $? -eq 0 ]]; then
@@ -55,7 +56,7 @@ function add_alias {
     ANDROID_SCRIPT=`find $HOME/.debugLogs -iname 'android*logs.py' -print`
     IOS_SCRIPT=`find $HOME/.debugLogs -iname 'ios*logs.py' -print`
 
-    echo "Adicionado alias para os scripts."
+    echo "Adicionando alias para os scripts."
     # zsh
     if grep 'alias\ tracking_android' ~/.zshrc; then
         echo "alias tracking_android existe no .zshrc."
@@ -153,8 +154,8 @@ function install_adb {
 
 
         while true; do
-        read -n1 -p "Deseja instalar o adb? [Y/n]: " respota
-            case $respota in
+        read -n1 -p "Deseja instalar o adb? [Y/n]: " resposta
+            case $resposta in
                 Y | y) echo
                     echo "Você escolheu instalar."
                     download_adb
@@ -179,4 +180,3 @@ function mensagem_concluido {
 
 criar_debugLogs
 baixar_repo
-add_alias

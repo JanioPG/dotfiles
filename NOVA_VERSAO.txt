@@ -1,0 +1,58 @@
+Finalidade: Disponibilizar os scripts para uma visualização mais amigável dos hits/eventos
+acionados no tracking de apps.
+
+Primeiro baixe o arquivo existente neste diretório chamado: install.sh
+
+Se for a primeira vez que estará executando o arquivo, leia o tópico 'MAIORES DETALHES'.
+
+PROCESSO DE INSTALAÇÃO:
+1. Baixar o arquivo install.sh.
+2. Abra o terminal e se dirija até o diretório onde está o arquivo baixado anteriormente.
+     Exemplo: cd ~/Downloads
+3. Agora, para executar o arquivo, você precisa dar a permissão de execução. Execute o
+comando:
+    chmod +x install.sh
+4. Ainda no mesmo diretório, execute o arquivo com o comando:
+    ./install.sh
+5. Concluído, reinicie o terminal para que as configurações do shell sejam recarregadas.
+  Ou recarregue com source ~/.zshrc, source ~/.bashrc, exec zsh, etc. O que for melhor
+  para o seu caso.
+
+  Verifique executando os comandos 'tracking_android' ou 'tracking_ios'.
+
+
+MAIORES DETALHES:
+- Ao executar o script, serão baixados os scripts python de um repositório do github.
+- Serão adicionados dois alias no seu arquivo de configuração do shell.
+  1. tracking_android
+  2. tracking_ios
+
+  Isso permitirá que você execute os scripts de qualquer diretório no terminal, bastando
+  apenas executar o comando 'tracking_android' para eventos de apps Android e 'tracking_ios'
+  para eventos de apps iOS.
+
+- Opcional:
+  Os scripts utilizam o 'adb' para a geração de logs. Mas o que é o adb?
+
+  "Android Debug Bridge (adb) is a versatile command-line tool that lets you communicate
+  with a device. The adb command facilitates a variety of device actions, such as
+  installing and debugging apps. adb provides access to a Unix shell that you can use to
+  run a variety of commands on a device."
+
+  Caso você tenha baixado/instalado o Android Studio, ele vem com o adb, bastando apenas
+  adicioná-lo à variável path ou criar um alias para que fique disponível ao chamá-lo no
+  terminal.
+
+  Porém, caso você tenha interesse somente no adb e não for utilizar o Android Studio, você pode
+  baixar apenas o adb. Válido para liberar espaço e processamento, visto que o Android
+  Studio é relativamente pesado e caso não seja utilizado é melhor não tê-lo instalado.
+
+  O arquivo install.sh ao ser executado irá procurar o adb na sua 'máquina' e se não encontrar
+  ou ver que você não adicionou ao path e nem criou um alias, ele irá perguntar se você deseja
+  instalar o adb. Diante do que foi brevemente descrito acima, você pode escolher.
+
+  Caso escolha instalar, o script irá baixar somente o adb (command-line tool) e, em seguida,
+  irá adicionar na sua variável path. E pronto, está disponível para você utilizá-lo.
+- Os scripts python ficarão salvos no diretório .debugLogs na sua home.
+  O adb também caso tenha optado por instalar.
+  Obs.: o diretório é criado pelo 'shell scripting'.
