@@ -3,7 +3,7 @@ acionados no tracking de apps.
 
 Primeiro baixe o arquivo existente neste diretório chamado: install.sh
 
-Se for a primeira vez que estará executando o arquivo, leia o tópico 'MAIORES DETALHES'.
+Se for a primeira vez que estará executando o arquivo, leia o tópico 'MAIS DETALHES'.
 
 PROCESSO DE INSTALAÇÃO:
 1. Baixar o arquivo install.sh.
@@ -21,7 +21,7 @@ comando:
   Verifique executando os comandos 'tracking_android' ou 'tracking_ios'.
 
 
-MAIORES DETALHES:
+MAIS DETALHES:
 - Ao executar o script, serão baixados os scripts python de um repositório do github.
 - Serão adicionados dois alias no seu arquivo de configuração do shell.
   1. tracking_android
@@ -53,11 +53,11 @@ MAIORES DETALHES:
 
   Caso escolha instalar, o script irá baixar somente o adb (command-line tool) e, em seguida,
   irá adicionar na sua variável path. E pronto, está disponível para você utilizá-lo.
-- Os scripts python ficarão salvos no diretório .debugLogs na sua home.
+- Os scripts python ficarão salvos no diretório .appDebugLogs na sua home.
   O adb também caso tenha optado por instalar.
   Obs.: o diretório é criado pelo 'shell scripting'.
 
-  Qualquer dúvida a mais: guilda de mobile solutions ou janio.garcia@raccoon.ag.
+  Qualquer dúvida a mais: guilda mobile solutions ou janio.garcia@raccoon.ag.
 
   --
     Tracking Solutions
