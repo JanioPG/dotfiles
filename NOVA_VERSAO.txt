@@ -56,3 +56,8 @@ MAIORES DETALHES:
 - Os scripts python ficarão salvos no diretório .debugLogs na sua home.
   O adb também caso tenha optado por instalar.
   Obs.: o diretório é criado pelo 'shell scripting'.
+
+  Qualquer dúvida a mais: guilda de mobile solutions ou janio.garcia@raccoon.ag.
+
+  --
+    Tracking Solutions
