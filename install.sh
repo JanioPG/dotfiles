@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# variaveis de ambiente
+# environment variables
 DEBUG_LOGS=$HOME/.appDebugLogs/debug_logs_tracking
 ADB_URL_LINUX=https://dl.google.com/android/repository/platform-tools-latest-linux.zip
 ADB_URL_MAC=https://dl.google.com/android/repository/platform-tools-latest-darwin.zip
 OS_INFO=`uname`
 
 
-function get_os_info {
+function get_OS_info {
     if [[ $OS_INFO == "Linux" ]]; then
         echo "Você é um usuário do Linux. Demais!"
     elif [[ $OS_INFO == "Darwin" ]]; then
@@ -19,7 +19,7 @@ function get_os_info {
 }
 
 
-function criar_appDebugLogs {
+function create_appDebugLogs_folder {
     echo -e "=> Começando...\n"
     if [[ -d $DEBUG_LOGS ]]; then
         echo "O diretório .appDebugLogs existe!"
@@ -30,7 +30,7 @@ function criar_appDebugLogs {
 }
 
 
-function baixar_repo {
+function download_repository {
     echo -e "\n=> Baixando repositório:"
     if git --version; then
         git clone https://github.com/JanioPG/Debug-Logs-Tracking.git $DEBUG_LOGS
@@ -40,7 +40,7 @@ function baixar_repo {
             add_alias
         else
             echo "Erro ao baixar o repositório. Veja o erro e após corrigir, se necessário, execute novamente o script."
-            echo "Nota: Se o diretório(fica na sua home) já existe e não está vazio, caso queira baixar novamente o repositório, considere limpar."
+            echo "Nota: Se o diretório(fica na sua home) já existe e não está vazio, considere limpá-lo caso queira baixar novamente o repositório."
         fi
     else
         echo "Git não está instalado."
@@ -112,7 +112,9 @@ function add_adb_to_path {
 
 
 function download_adb {
-    get_os_info
+
+    get_OS_info
+
     if [[ $OS_INFO == "Linux" ]]; then
         curl $ADB_URL_LINUX -# -L --create-dirs -o $HOME/.appDebugLogs/platform-tools.zip -C -
     elif [[ $OS_INFO == "Darwin" ]]; then
@@ -149,18 +151,19 @@ function install_adb {
         elif [[ $OS_INFO == "Linux" ]]; then
             if ls `find ~/Android -type d -iname platform-tools -print` | grep adb; then
                 echo "Apesar disso, encontrei o adb em ~/Android/Sdk/platform-tools/adb. Adicione-o à variável path para usar."
-                echo "  Em seu arquivo .zshrc (ou .bashrc) na home, adicione a linha:"
+                echo "Em seu arquivo .zshrc (ou .bashrc) na home, adicione a linha:"
                 echo -e "\texport PATH=\$PATH:\$HOME/Android/platform-tools"
             fi
         fi
 
-
         while true; do
-        read -n1 -p "Deseja instalar o adb? [Y/n]: " resposta
-            case $resposta in
+        read -n1 -p "Deseja instalar o adb? [Y/n]: " userResponse
+            case $userResponse in
                 Y | y) echo
                     echo "Você escolheu instalar."
+
                     download_adb
+
                     break;;
                 N | n) echo
                     break;;
@@ -170,15 +173,15 @@ function install_adb {
         done
     fi
 
-    mensagem_concluido
+    completion_message
 }
 
 
-function mensagem_concluido {
+function completion_message {
     echo -e "\n=> Concluído!"
     echo "Reincie o terminal fechando e abrindo novamente para que as configurações do shell sejam recarregadas."
     echo "Recarregadas as configurações, execute no seu terminal 'tracking_android' para ver os eventos de Android ou 'tracking_ios' para ver os eventos de iOS."
 }
 
-criar_appDebugLogs
-baixar_repo
+create_appDebugLogs_folder
+download_repository
