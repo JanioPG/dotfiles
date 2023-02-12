@@ -2,8 +2,6 @@
 
 # variaveis de ambiente
 DEBUG_LOGS=$HOME/.appDebugLogs/debug_logs_tracking
-ANDROID_SCRIPT=""
-IOS_SCRIPT=""
 ADB_URL_LINUX=https://dl.google.com/android/repository/platform-tools-latest-linux.zip
 ADB_URL_MAC=https://dl.google.com/android/repository/platform-tools-latest-darwin.zip
 OS_INFO=`uname`
@@ -58,20 +56,20 @@ function baixar_repo {
 
 function add_alias {
     echo -e "\n=> Adicionando alias para os scripts."
-    ANDROID_SCRIPT=`find $HOME/.appDebugLogs -iname 'android*logs.py' -print`
-    IOS_SCRIPT=`find $HOME/.appDebugLogs -iname 'ios*logs.py' -print`
 
     # zsh
     if grep 'alias\ tracking_android' ~/.zshrc; then
         echo "alias tracking_android existe no arquivo .zshrc."
     else
-        echo "alias tracking_android='python3 $ANDROID_SCRIPT'" >> ~/.zshrc
+        echo -ne "\nalias tracking_android=" >> ~/.zshrc
+        echo -e \"python3 \`find \$HOME/.appDebugLogs -iname \'android*logs.py\' -print\`\" >> ~/.zshrc
     fi
 
     if grep 'alias\ tracking_ios' ~/.zshrc; then
         echo "alias tracking_ios existe no arquivo .zshrc."
     else
-        echo "alias tracking_ios='python3 $IOS_SCRIPT'" >> ~/.zshrc
+        echo -ne "alias tracking_ios=" >> ~/.zshrc
+        echo -e \"python3 \`find \$HOME/.appDebugLogs -iname \'ios*logs.py\' -print\`\" >> ~/.zshrc
     fi
     echo -e "\tConcluído para zsh."
 
@@ -80,13 +78,15 @@ function add_alias {
     if grep 'alias\ tracking_android' ~/.bashrc; then
         echo "alias tracking_android existe no arquivo .bashrc."
     else
-        echo "alias tracking_android='python3 $ANDROID_SCRIPT'" >> ~/.bashrc
+        echo -ne "\nalias tracking_android=" >> ~/.bashrc
+        echo -e \"python3 \`find \$HOME/.appDebugLogs -iname \'android*logs.py\' -print\`\" >> ~/.bashrc
     fi
 
     if grep 'alias\ tracking_ios' ~/.bashrc; then
         echo "alias tracking_ios existe no arquivo .bashrc."
     else
-        echo "alias tracking_ios='python3 $IOS_SCRIPT'" >> ~/.bashrc
+        echo -ne "alias tracking_ios=" >> ~/.bashrc
+        echo -e \"python3 \`find \$HOME/.appDebugLogs -iname \'ios*logs.py\' -print\`\" >> ~/.bashrc
     fi
     echo -e "\tConcluído para bash."
 
@@ -98,13 +98,13 @@ function add_adb_to_path {
     echo -e "\n=> Adicionando 'adb' à variável path:"
 
     if ! grep 'export\ PATH.*platform-tools' ~/.zshrc; then
-        echo "Adicionando adb na variável path" >> ~/.zshrc
+        echo -e "\n# Adicionando adb na variável path" >> ~/.zshrc
         echo -e "export PATH=\$PATH:\$HOME/.appDebugLogs/platform-tools" >> ~/.zshrc
     fi
     echo -e "\tConcluído para zsh."
 
     if ! grep 'export\ PATH.*platform-tools' ~/.bashrc; then
-        echo "Adicionando adb na variável path" >> ~/.bashrc
+        echo -e "\n# Adicionando adb na variável path" >> ~/.bashrc
         echo -e "export PATH=\$PATH:\$HOME/.appDebugLogs/platform-tools" >> ~/.bashrc
     fi
     echo -e "\tConcluído para bash."
@@ -149,7 +149,7 @@ function install_adb {
         elif [[ $OS_INFO == "Linux" ]]; then
             if ls `find ~/Android -type d -iname platform-tools -print` | grep adb; then
                 echo "Apesar disso, encontrei o adb em ~/Android/Sdk/platform-tools/adb. Adicione-o à variável path para usar."
-                echo "  Em seu arquivo .zshrc (ou .bashrc) na home, adicione a linha."
+                echo "  Em seu arquivo .zshrc (ou .bashrc) na home, adicione a linha:"
                 echo -e "\texport PATH=\$PATH:\$HOME/Android/platform-tools"
             fi
         fi
