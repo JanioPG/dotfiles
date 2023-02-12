@@ -46,9 +46,9 @@ function download_repository {
         echo "Git não está instalado."
         echo " Instale com apt para Linux (debian/ubuntu): 'sudo apt install git'."
         echo " Ou com o homebrew para Mac: 'brew install git'."
-        echo " NOTA: Após instalar, adicione seu nome com:"
+        echo "NOTA: Após instalar, adicione seu nome com:"
         echo -e "\tgit config --global user.name 'seunome'."
-        echo -e "Adicione seu e-mail com:"
+        echo -e "      Adicione seu e-mail com:"
         echo -e "\tgit config --global user.email 'example@domain.com'."
     fi
 }
