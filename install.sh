@@ -39,8 +39,14 @@ function download_repository {
             echo "Feito: repositório baixado!"
             add_alias
         else
-            echo "Erro ao baixar o repositório. Veja o erro e após corrigir, se necessário, execute novamente o script."
-            echo "Nota: Se o diretório(fica na sua home) já existe e não está vazio, considere limpá-lo caso queira baixar novamente o repositório."
+            echo "Atualizando repositório..."
+            cd $DEBUG_LOGS && git pull
+            if [[ $? -eq 0 ]]; then
+                echo "Feito: Repositório atualizado!"
+                add_alias
+            else
+                echo "Erro ao baixar o repositório. Veja o erro e após corrigir, se necessário, execute novamente o script."
+            fi
         fi
     else
         echo "Git não está instalado."
@@ -121,6 +127,7 @@ function download_adb {
         curl $ADB_URL_MAC -# -L --create-dirs -o $HOME/.appDebugLogs/platform-tools.zip -C -
     else
         echo "Você não é usuário Linux e nem Mac. Mas baixe o adb para seu sistema operacional em 'https://developer.android.com/studio/releases/platform-tools'."
+        exit 1
     fi
 
     if [[ $? -eq 0 ]]; then
