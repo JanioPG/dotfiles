@@ -144,7 +144,7 @@ function download_adb {
 
 
 function install_adb {
-    echo -e "\n=> Verificando se o 'adb' está instalado:"
+    echo -e "\n=> Verificando se o 'adb' está instalado (aplicável para Android):"
     if ! adb --version; then
         echo "O 'adb' não foi encontrado."
         echo "Nota: Se você instalou o Android Studio, talvez precise adicionar o adb à variável path ou adicionar um alias."
