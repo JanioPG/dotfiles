@@ -6,62 +6,72 @@ ADB_URL_LINUX=https://dl.google.com/android/repository/platform-tools-latest-lin
 ADB_URL_MAC=https://dl.google.com/android/repository/platform-tools-latest-darwin.zip
 OS_INFO=`uname`
 
+# COLORS
+GREEN="\033[0;32m"
+BLUE="\033[0;34m"
+RED="\033[0;31m"
+YELLOW="\033[0;33m"
+CLOSE="\033[0m"
+
+# default strings
+ARROW="\n${BLUE}=>$CLOSE"
+
 
 function get_OS_info {
     if [[ $OS_INFO == "Linux" ]]; then
-        echo "Você é um usuário do Linux. Demais!"
+        echo -e "${BLUE}Você é um usuário do Linux. Demais!$CLOSE"
     elif [[ $OS_INFO == "Darwin" ]]; then
-        echo "Você é um usuário do Mac. Bom estilo!"
+        echo -e "${BLUE}Você é um usuário do Mac. Bom estilo!$CLOSE"
     else
         [[ $OS_INFO == "WindowsNT" ]]
-        echo "Você é um usuário do Windows. Ferrou!"
+        echo -e "${BLUE}Você é um usuário do Windows. Ferrou!${CLOSE}"
     fi
 }
 
 
 function create_appDebugLogs_folder {
-    echo -e "=> Começando...\n"
+    echo -e "$ARROW ${GREEN}Começando...${CLOSE}"
     if [[ -d $DEBUG_LOGS ]]; then
-        echo "O diretório .appDebugLogs existe!"
+        echo " O diretório .appDebugLogs existe!"
     else
-        echo "O diretório .appDebugLogs não existe. Criando diretórios:"
+        echo " O diretório .appDebugLogs não existe. Criando diretórios:"
         mkdir -v -p $DEBUG_LOGS
     fi
 }
 
 
 function download_repository {
-    echo -e "\n=> Baixando repositório:"
+    echo -e "$ARROW ${GREEN}Baixando repositório:$CLOSE"
     if git --version; then
         git clone https://github.com/JanioPG/Debug-Logs-Tracking.git $DEBUG_LOGS
 
         if [[ $? -eq 0 ]]; then
-            echo "Feito: repositório baixado!"
+            echo -e "${BLUE}\tFeito: repositório baixado!$CLOSE"
             add_alias
         else
-            echo "Atualizando repositório..."
+            echo -e "Atualizando repositório..."
             cd $DEBUG_LOGS && git pull
             if [[ $? -eq 0 ]]; then
-                echo "Feito: Repositório atualizado!"
+                echo -e "${BLUE}\tFeito: Repositório atualizado!$CLOSE"
                 add_alias
             else
-                echo "Erro ao baixar o repositório. Veja o erro e após corrigir, se necessário, execute novamente o script."
+                echo -e "${RED}Erro ao baixar o repositório. Veja o erro e após corrigir, se necessário, execute novamente o script.$CLOSE"
             fi
         fi
     else
-        echo "Git não está instalado."
+        echo -e "${YELLOW}Git não está instalado.$CLOSE"
         echo " Instale com apt para Linux (debian/ubuntu): 'sudo apt install git'."
         echo " Ou com o homebrew para Mac: 'brew install git'."
-        echo "NOTA: Após instalar, adicione seu nome com:"
-        echo -e "\tgit config --global user.name 'seunome'."
+        echo " NOTA: Após instalar, adicione seu nome com:"
+        echo -e "${YELLOW}\tgit config --global user.name 'seunome'.$CLOSE"
         echo -e "      Adicione seu e-mail com:"
-        echo -e "\tgit config --global user.email 'example@domain.com'."
+        echo -e "${YELLOW}\tgit config --global user.email 'example@domain.com'.$CLOSE"
     fi
 }
 
 
 function add_alias {
-    echo -e "\n=> Adicionando alias para os scripts."
+    echo -e "$ARROW ${GREEN}Adicionando alias para os scripts.$CLOSE"
 
     # zsh
     if grep 'alias\ tracking_android' ~/.zshrc; then
@@ -77,8 +87,7 @@ function add_alias {
         echo -ne "alias tracking_ios=" >> ~/.zshrc
         echo -e \"python3 \`find \$HOME/.appDebugLogs -iname \'ios*logs.py\' -print\`\" >> ~/.zshrc
     fi
-    echo -e "\tConcluído para zsh."
-
+    echo -e "${BLUE}\tConcluído para zsh.$CLOSE"
 
     # bash
     if grep 'alias\ tracking_android' ~/.bashrc; then
@@ -94,26 +103,26 @@ function add_alias {
         echo -ne "alias tracking_ios=" >> ~/.bashrc
         echo -e \"python3 \`find \$HOME/.appDebugLogs -iname \'ios*logs.py\' -print\`\" >> ~/.bashrc
     fi
-    echo -e "\tConcluído para bash."
+    echo -e "${BLUE}\tConcluído para bash.$CLOSE"
 
     install_adb
 }
 
 
 function add_adb_to_path {
-    echo -e "\n=> Adicionando 'adb' à variável path:"
+    echo -e "$ARROW ${GREEN}Adicionando 'adb' à variável path:$CLOSE"
 
     if ! grep 'export\ PATH.*platform-tools' ~/.zshrc; then
         echo -e "\n# Adicionando adb na variável path" >> ~/.zshrc
         echo -e "export PATH=\$PATH:\$HOME/.appDebugLogs/platform-tools" >> ~/.zshrc
     fi
-    echo -e "\tConcluído para zsh."
+    echo -e "${BLUE}\tConcluído para zsh.$CLOSE"
 
     if ! grep 'export\ PATH.*platform-tools' ~/.bashrc; then
         echo -e "\n# Adicionando adb na variável path" >> ~/.bashrc
         echo -e "export PATH=\$PATH:\$HOME/.appDebugLogs/platform-tools" >> ~/.bashrc
     fi
-    echo -e "\tConcluído para bash."
+    echo -e "${BLUE}\tConcluído para bash.$CLOSE"
 }
 
 
@@ -144,21 +153,21 @@ function download_adb {
 
 
 function install_adb {
-    echo -e "\n=> Verificando se o 'adb' está instalado (aplicável para Android):"
+    echo -e "$ARROW ${GREEN}Verificando se o 'adb' está instalado (aplicável para Android):$CLOSE"
     if ! adb --version; then
-        echo "O 'adb' não foi encontrado."
+        echo -e "${YELLOW}O 'adb' não foi encontrado.$CLOSE"
         echo "Nota: Se você instalou o Android Studio, talvez precise adicionar o adb à variável path ou adicionar um alias."
 
         if [[ $OS_INFO == "Darwin" ]]; then
             if find ~/Library/Android/sdk/platform-tools -iname adb -print; then
-                echo "Apesar disso, encontrei o adb em ~/Library/Android/sdk/platform-tools/adb. Adicione-o à variável path para usar."
+                echo -e "${YELLOW}Apesar disso, encontrei o adb em ~/Library/Android/sdk/platform-tools/adb. Adicione-o à variável path para usar.$CLOSE"
                 echo "Em seu arquivo .zshrc (ou .bashrc) na home, adicione a linha:"
                 echo -e "\texport PATH=\$PATH:\$HOME/Library/Android/sdk/platform-tools"
             fi
         elif [[ $OS_INFO == "Linux" ]]; then
             if ls `find ~/Android -type d -iname platform-tools -print` | grep adb; then
-                echo "Apesar disso, encontrei o adb em ~/Android/Sdk/platform-tools/adb. Adicione-o à variável path para usar."
-                echo "Em seu arquivo .zshrc (ou .bashrc) na home, adicione a linha:"
+                echo -e "${YELLOW}Apesar disso, encontrei o adb em ~/Android/Sdk/platform-tools/adb. Adicione-o à variável path para utilizá-lo.$CLOSE"
+                echo "Em seu arquivo .zshrc (ou .bashrc) localizado na home, adicione a linha:"
                 echo -e "\texport PATH=\$PATH:\$HOME/Android/platform-tools"
             fi
         fi
@@ -167,7 +176,7 @@ function install_adb {
         read -n1 -p "Deseja instalar o adb? [Y/n]: " userResponse
             case $userResponse in
                 Y | y) echo
-                    echo "Você escolheu instalar."
+                    echo -e "${BLUE}Você escolheu instalar.$CLOSE"
 
                     download_adb
 
@@ -175,7 +184,7 @@ function install_adb {
                 N | n) echo
                     break;;
                 *) echo
-                    echo "Opção inválida. Digite somente y ou n.";;
+                    echo -e "${RED}Opção inválida. Digite somente y (yes) ou n (no).$CLOSE";;
             esac
         done
     fi
@@ -185,9 +194,9 @@ function install_adb {
 
 
 function completion_message {
-    echo -e "\n=> Concluído!"
-    echo "Reincie o terminal fechando e abrindo novamente para que as configurações do shell sejam recarregadas."
-    echo "Recarregadas as configurações, execute no seu terminal 'tracking_android' para ver os eventos de Android ou 'tracking_ios' para ver os eventos de iOS."
+    echo -e "$ARROW ${GREEN}Concluído!$CLOSE"
+    echo "Reincie o terminal (fechando e abrindo novamente) para que as configurações do shell sejam recarregadas."
+    echo -e "Recarregadas as configurações, execute no seu terminal ${BLUE}'tracking_android'$CLOSE para ver os eventos de Android ou ${BLUE}'tracking_ios'$CLOSE para ver os eventos de iOS."
 }
 
 create_appDebugLogs_folder
