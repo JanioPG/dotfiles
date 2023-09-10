@@ -11,20 +11,21 @@ GREEN="\033[0;32m"
 BLUE="\033[0;34m"
 RED="\033[0;31m"
 YELLOW="\033[0;33m"
+CYAN="\033[0;36m"
 CLOSE="\033[0m"
 
 # default strings
-ARROW="\n${BLUE}=>$CLOSE"
+ARROW="\n${CYAN}=>$CLOSE"
 
 
 function get_OS_info {
     if [[ $OS_INFO == "Linux" ]]; then
-        echo -e "${BLUE}Você é um usuário do Linux. Demais!$CLOSE"
+        echo -e "${CYAN}Você é um usuário do Linux. Demais!$CLOSE"
     elif [[ $OS_INFO == "Darwin" ]]; then
-        echo -e "${BLUE}Você é um usuário do Mac. Bom estilo!$CLOSE"
+        echo -e "${CYAN}Você é um usuário do Mac. Bom estilo!$CLOSE"
     else
         [[ $OS_INFO == "WindowsNT" ]]
-        echo -e "${BLUE}Você é um usuário do Windows. Ferrou!${CLOSE}"
+        echo -e "${CYAN}Você é um usuário do Windows. Ferrou!${CLOSE}"
     fi
 }
 
@@ -46,13 +47,13 @@ function download_repository {
         git clone https://github.com/JanioPG/Debug-Logs-Tracking.git $DEBUG_LOGS
 
         if [[ $? -eq 0 ]]; then
-            echo -e "${BLUE}\tFeito: repositório baixado!$CLOSE"
+            echo -e "${CYAN}\tFeito: repositório baixado!$CLOSE"
             add_alias
         else
             echo -e "Atualizando repositório..."
             cd $DEBUG_LOGS && git pull
             if [[ $? -eq 0 ]]; then
-                echo -e "${BLUE}\tFeito: Repositório atualizado!$CLOSE"
+                echo -e "${CYAN}\tFeito: Repositório atualizado!$CLOSE"
                 add_alias
             else
                 echo -e "${RED}Erro ao baixar o repositório. Veja o erro e após corrigir, se necessário, execute novamente o script.$CLOSE"
@@ -87,7 +88,7 @@ function add_alias {
         echo -ne "alias tracking_ios=" >> ~/.zshrc
         echo -e \"python3 \`find \$HOME/.appDebugLogs -iname \'ios*logs.py\' -print\`\" >> ~/.zshrc
     fi
-    echo -e "${BLUE}\tConcluído para zsh.$CLOSE"
+    echo -e "${CYAN}\tConcluído para zsh.$CLOSE"
 
     # bash
     if grep 'alias\ tracking_android' ~/.bashrc; then
@@ -103,7 +104,7 @@ function add_alias {
         echo -ne "alias tracking_ios=" >> ~/.bashrc
         echo -e \"python3 \`find \$HOME/.appDebugLogs -iname \'ios*logs.py\' -print\`\" >> ~/.bashrc
     fi
-    echo -e "${BLUE}\tConcluído para bash.$CLOSE"
+    echo -e "${CYAN}\tConcluído para bash.$CLOSE"
 
     install_adb
 }
@@ -116,13 +117,13 @@ function add_adb_to_path {
         echo -e "\n# Adicionando adb na variável path" >> ~/.zshrc
         echo -e "export PATH=\$PATH:\$HOME/.appDebugLogs/platform-tools" >> ~/.zshrc
     fi
-    echo -e "${BLUE}\tConcluído para zsh.$CLOSE"
+    echo -e "${CYAN}\tConcluído para zsh.$CLOSE"
 
     if ! grep 'export\ PATH.*platform-tools' ~/.bashrc; then
         echo -e "\n# Adicionando adb na variável path" >> ~/.bashrc
         echo -e "export PATH=\$PATH:\$HOME/.appDebugLogs/platform-tools" >> ~/.bashrc
     fi
-    echo -e "${BLUE}\tConcluído para bash.$CLOSE"
+    echo -e "${CYAN}\tConcluído para bash.$CLOSE"
 }
 
 
@@ -176,7 +177,7 @@ function install_adb {
         read -n1 -p "Deseja instalar o adb? [Y/n]: " userResponse
             case $userResponse in
                 Y | y) echo
-                    echo -e "${BLUE}Você escolheu instalar.$CLOSE"
+                    echo -e "${CYAN}Você escolheu instalar.$CLOSE"
 
                     download_adb
 
@@ -196,7 +197,7 @@ function install_adb {
 function completion_message {
     echo -e "$ARROW ${GREEN}Concluído!$CLOSE"
     echo "Reincie o terminal (fechando e abrindo novamente) para que as configurações do shell sejam recarregadas."
-    echo -e "Recarregadas as configurações, execute no seu terminal ${BLUE}'tracking_android'$CLOSE para ver os eventos de Android ou ${BLUE}'tracking_ios'$CLOSE para ver os eventos de iOS."
+    echo -e "Recarregadas as configurações, execute no seu terminal ${CYAN}'tracking_android'$CLOSE para ver os eventos de Android ou ${CYAN}'tracking_ios'$CLOSE para ver os eventos de iOS."
 }
 
 create_appDebugLogs_folder
