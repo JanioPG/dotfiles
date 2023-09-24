@@ -15,7 +15,7 @@ CYAN="\033[0;36m"
 CLOSE="\033[0m"
 
 # default strings
-ARROW="\n${CYAN}=>$CLOSE"
+ARROW="\n${CYAN}==>$CLOSE"
 
 
 function get_OS_info {
@@ -197,7 +197,7 @@ function install_adb {
 function completion_message {
     echo -e "$ARROW ${GREEN}Concluído!$CLOSE"
     echo "Reincie o terminal (fechando e abrindo novamente) para que as configurações do shell sejam recarregadas."
-    echo -e "Recarregadas as configurações, execute no seu terminal ${CYAN}'tracking_android'$CLOSE para ver os eventos de Android ou ${CYAN}'tracking_ios'$CLOSE para ver os eventos de iOS."
+    echo -e "Recarregadas as configurações, execute no seu terminal ${CYAN}'tracking_android'$CLOSE para ver os eventos de Android ou ${CYAN}'tracking_ios'$CLOSE para ver os eventos de iOS.\n\nEm caso de dúvidas, contate: guild mobile solutions ou janio.garcia@raccoon.ag"
 }
 
 create_appDebugLogs_folder
