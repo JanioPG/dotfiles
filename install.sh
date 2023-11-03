@@ -5,6 +5,7 @@ DEBUG_LOGS=$HOME/.appDebugLogs/debug_logs_tracking
 ADB_URL_LINUX=https://dl.google.com/android/repository/platform-tools-latest-linux.zip
 ADB_URL_MAC=https://dl.google.com/android/repository/platform-tools-latest-darwin.zip
 OS_INFO=`uname`
+GITHUB_REPO="https://github.com/Raccoon-Monks/Debug-Logs-for-App-Tracking.git"
 
 # COLORS
 GREEN="\033[0;32m"
@@ -44,14 +45,14 @@ function create_appDebugLogs_folder {
 function download_repository {
     echo -e "$ARROW ${GREEN}Baixando repositório:$CLOSE"
     if git --version; then
-        git clone https://github.com/JanioPG/Debug-Logs-Tracking.git $DEBUG_LOGS
+        git clone $GITHUB_REPO $DEBUG_LOGS
 
         if [[ $? -eq 0 ]]; then
             echo -e "${CYAN}\tFeito: repositório baixado!$CLOSE"
             add_alias
         else
             echo -e "Atualizando repositório..."
-            cd $DEBUG_LOGS && git pull
+            cd $DEBUG_LOGS && git pull origin main
             if [[ $? -eq 0 ]]; then
                 echo -e "${CYAN}\tFeito: Repositório atualizado!$CLOSE"
                 add_alias
